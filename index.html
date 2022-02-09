@@ -1,10 +1,8 @@
 <html>
 
 <head>
-    <script
-        src="https://merchant.paywithzero.net/client/token/Collect.js"
-        data-tokenization-key="q7nFSA-YbnMWa-rQmamh-Jvm5Ep"
-    ></script>
+    <script src="https://merchant.paywithzero.net/client/token/Collect.js"
+        data-tokenization-key="2TQdje-6MfPE8-NSUa5B-B44w5K"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no" />
     <style>
@@ -19,8 +17,18 @@
 
 <body>
     <h1>Inline CollectJS Demo</h1>
-    <form action="/your-page.php" method="post">
+    <!-- This point to our api example running in localhost:3000 -->
+    <!-- You can find the project here: https://github.com/payxero/ecommerce-integration-api -->
+    <form action="http://localhost:3000/payment/charge" method="post">
         <table>
+            <tr>
+                <td>Name</td>
+                <td><input size="30" type="text" id="name" value="Test" /></td>
+            </tr>
+            <tr>
+                <td>Zip</td>
+                <td><input size="30" type="text" id="zip" value="90210"></td>
+            </tr>
             <tr>
                 <td>CC Number</td>
                 <td id="demoCcnumber"></td>
@@ -35,7 +43,7 @@
             </tr>
         </table>
         <br />
-        <button id="demoPayButton" type="button">Pay the money.</button>
+        <button id="demoPayButton" type="button">Pay</button>
     </form>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -100,13 +108,53 @@
                     console.log("Collect.js loaded the fields onto the form");
                 },
                 callback: function (response) {
+                    // This is the representative token of the card data
                     alert(response.token);
-                    var input = document.createElement("input");
-                    input.type = "hidden";
-                    input.name = "payment_token";
-                    input.value = response.token;
+
+                    var nameValue = document.querySelector('#name').value;
+                    var zipValue = document.querySelector('#zip').value;
+
+                    // This is sample data in a convinient format for our api to process
+                    // notes the card data at the bottom of the object.
+                    var jsonData = JSON.stringify({
+                        clientId: '5ff76fb63bcf0a001c6228e0',
+                        amount: 100,
+                        surcharge: 0,
+                        contact: {
+                            email: 'demo.ecommerce@gmail.com',
+                            phone: '5555555555'
+                        },
+                        billingAddress: {
+                            address: 'ecommerce',
+                            city: 'AL',
+                            country: 'US',
+                            state: 'Alaska',
+                            zipCode: '32405',
+                        },
+                        shippingAddress: {},
+                        order: {
+                            amount: 0.5,
+                            shipping: 0,
+                            tax: 0,
+                            poNumber: '65614',
+                            discount: 0
+                        },
+                        capture: true,
+                        card: {
+                            name: nameValue,
+                            zipCode: zipValue,
+                            payment_token: response.token,
+                            ...response.card
+                        },
+                    })
+
+                    var jsonDataInput = document.createElement("input")
+                    jsonDataInput.type = "hidden";
+                    jsonDataInput.name = "jsonDataInput";
+                    jsonDataInput.value = jsonData;
+                    
                     var form = document.getElementsByTagName("form")[0];
-                    form.appendChild(input);
+                    form.appendChild(jsonDataInput);
                     form.submit();
                 },
             });
