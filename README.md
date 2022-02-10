@@ -5,4 +5,4 @@ A simple HTML5 and Javascript Application thats integrate with our api
 run <code>npm install</code> or <code>yarn install</code>
 
 # Run the application
-To run the sample application run <code>node main.js</code> that will start a development web server to serve the index.html
+To run the sample application use <code>node main.js</code> that will start a development web server to serve the index.html
