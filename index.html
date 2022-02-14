@@ -6,6 +6,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no" />
     <style>
+        /* You can set common css rules here when 'styleSniffer' option is true */
         input {
             background: white;
             border: 1px solid black;
@@ -49,7 +50,7 @@
             CollectJS.configure({
                 paymentSelector: "#demoPayButton",
                 variant: "inline",
-                useStyle: true,
+                styleSniffer : true,
                 googleFont: "Montserrat:400",
                 customCss: {
 
