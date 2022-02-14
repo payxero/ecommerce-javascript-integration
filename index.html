@@ -6,12 +6,11 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no" />
     <style>
-        /* input {
-            border: 5px inset #808080;
-            font-size: 25px;
-            font-family: monospace;
-            padding: 5px;
-        } */
+        input {
+            background: white;
+            border: 1px solid black;
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -50,11 +49,10 @@
             CollectJS.configure({
                 paymentSelector: "#demoPayButton",
                 variant: "inline",
-                styleSniffer: "false",
+                useStyle: true,
                 googleFont: "Montserrat:400",
                 customCss: {
-                    color: "#0000ff",
-                    "background-color": "#d0d0ff",
+
                 },
                 invalidCss: {
                     color: "white",
@@ -62,15 +60,15 @@
                 },
                 validCss: {
                     color: "black",
-                    "background-color": "#d0ffd0",
+                    "background-color": "transparent",
                 },
                 placeholderCss: {
-                    color: "green",
-                    "background-color": "#808080",
+                    color: "black",
+                    "background-color": "transparent",
                 },
                 focusCss: {
-                    color: "yellow",
-                    "background-color": "#202020",
+                    color: "white",
+                    "background-color": "gray",
                 },
                 fields: {
                     ccnumber: {
